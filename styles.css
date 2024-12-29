@@ -25,3 +25,19 @@ section{
     border-radius: 5px;
     box-shadow: 0 4px 5px rgba(0,0,0,0.1);
 }
+#profile-image {
+    display: block;
+    margin: 0 auto;
+    border: 5px solid #ddd;
+}
+.card{
+    border-radius:10px;
+    transition: transform 0.3s ease;
+}
+.card:hover{
+    transform: translateY(-30px);
+}
+.card-body{
+    background-color: #f8f9fa;
+}
+
