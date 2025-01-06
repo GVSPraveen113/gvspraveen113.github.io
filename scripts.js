@@ -4,12 +4,12 @@ function smoothScroll(target){
     });
 }
 
-document.querySelectorAll('nav a').forEach(anchor=>{
-    anchor.addEventListener('click', function(e){
-        e.preventDefault();
-        smoothScroll(this.getAttribute('href'));
-    });
-});
+// document.querySelectorAll('nav a').forEach(anchor=>{
+//     anchor.addEventListener('click', function(e){
+//         e.preventDefault();
+//         smoothScroll(this.getAttribute('href'));
+//     });
+// });
 
 document.getElementById('viewAdeecPaper').addEventListener('click',
     function(){
@@ -47,5 +47,19 @@ document.querySelectorAll('.flip-card').forEach(card=>{
             console.log('Removed the is-flipped class')
         }
         
+    });
+});
+
+document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
+    anchor.addEventListener('click', function(e){
+        e.preventDefault();
+
+        const target = document.querySelector(this.getAttribute('href'));
+        const navBarHeight = document.querySelector('header').offsetHeight;
+
+        window.scrollTo({
+            top: target.offsetTop - navBarHeight,
+            behavior: 'smooth'
+        });
     });
 });
