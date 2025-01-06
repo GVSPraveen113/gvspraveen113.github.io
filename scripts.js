@@ -63,3 +63,62 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
         });
     });
 });
+
+function typeAndEraseText(roles, typingSpeed = 200, erasingSpeed = 100, pauseTime = 1200) {
+    const textElement = document.getElementById('role-text');
+    let i = 0;
+    let currentText = "";
+    let cursor = "|"
+
+    // Function to type out the current role
+    function type() {
+        if(i==roles.length){
+            i=0;
+            setTimeout(4*typingSpeed);
+        }
+        if (i < roles.length) {
+            let role = roles[i];
+            let index = 0;
+
+            // Function to type each character in the role
+            function typing() {
+                if (index < role.length) {
+                    currentText += role[index];
+                    textElement.textContent = currentText+cursor; // Update text content
+                    index++;
+                    setTimeout(typing, typingSpeed); // Continue typing the next character
+                } else {
+                    // Once the role is fully typed, add a newline and call erase after the pause
+                    setTimeout(() => {
+                        //currentText += '\n';  // Add a newline character
+                        textElement.textContent = currentText;  // Update text content
+                        setTimeout(erase, pauseTime); // Start erasing after the pause
+                    }, pauseTime);
+                }
+            }
+
+            // Function to erase the typed text
+            function erase() {
+                if (currentText.length > 0 && currentText[currentText.length - 1] !== '\n') {
+                    currentText = currentText.slice(0, -1); // Remove one character
+                    textElement.textContent = currentText+cursor; // Update text content
+                    setTimeout(erase, erasingSpeed); // Continue erasing the last character
+                } else {
+                    // If the last character is a newline, remove it
+                    if (currentText[currentText.length - 1] === '\n') {
+                        currentText = currentText.slice(0, -1);
+                    }
+                    i++;  // Move to the next role
+                    setTimeout(type, typingSpeed);  // Start typing the next role
+                }
+            }
+
+            typing(); // Start typing the current role
+        }
+    }
+
+    type(); // Start the typing process
+}
+
+// Usage example:
+typeAndEraseText(["Software Engineer", "Full Stack Application Developer", "Data Analyst", "AI Enthusiast", "AWS Solutions Architect"]);
